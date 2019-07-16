@@ -836,7 +836,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 10,
-      "y": -560,
+      "y": -645,
       "z": 0
     },
     "_scale": {
@@ -1093,7 +1093,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 720,
-      "height": 1311
+      "height": 1356
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1103,7 +1103,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 76,
+      "y": 53,
       "z": 0
     },
     "_scale": {
@@ -1256,7 +1256,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Brother",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "_parent": {
       "__id__": 27
     },
@@ -1302,8 +1302,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -311,
-      "y": -538,
+      "x": -320,
+      "y": -578,
       "z": 0
     },
     "_scale": {
@@ -3992,8 +3992,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 445,
-      "y": -407,
+      "x": 572,
+      "y": -580,
       "z": 0
     },
     "_scale": {
@@ -5918,11 +5918,12 @@
       "__uuid__": "29b90fd2-4fc9-40bc-a91b-035f8bb8382d"
     },
     "isConnect": true,
-    "ropeGravity": 2,
+    "ropeGravity": 3,
     "ropeConnect": {
       "__id__": 109
     },
     "ropeName": "",
+    "groupIndex": 1,
     "_id": "ad8r4VPB5M16bzO4ct3BX9"
   },
   {
@@ -9278,6 +9279,7 @@
       "__id__": 143
     },
     "ropeName": "",
+    "groupIndex": 1,
     "_id": "15VXmAMX9LSr/xxENw8lpa"
   },
   {
@@ -10755,6 +10757,7 @@
       "__id__": 239
     },
     "ropeName": "",
+    "groupIndex": 1,
     "_id": "3bqSXOxHBOkZZwx3dBzmiQ"
   },
   {
@@ -14110,6 +14113,7 @@
       "__id__": 273
     },
     "ropeName": "",
+    "groupIndex": 1,
     "_id": "1aCmpqhfxNRbF0WVx+Y4QG"
   },
   {
@@ -14274,7 +14278,7 @@
     "_skewX": 0,
     "_skewY": 0,
     "groupIndex": 0,
-    "_id": "d5UF7Ey6VPVo4bi4VtNVhH"
+    "_id": "64CBCDhqpF8aoCZKHtgNwz"
   },
   {
     "__type__": "cc.Label",
@@ -14299,7 +14303,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "aaUTPzFvhB0JDLAZz4TlYD"
+    "_id": "174Ea4FldI34hUtepH/70T"
   },
   {
     "__type__": "cc.RichText",

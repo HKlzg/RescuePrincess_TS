@@ -27,10 +27,11 @@ var toolsBasics = {
      * @param {绳子的连接点 数组类型} nodeArray 
      * @param {是否与转折点连接} isConnect 
      * @param {绳子名称/可选} ropeName
+     * @param {绳子分组/可选} groupIndex
      * @returns {绳子的父节点}
      */
-    creatRope: function (ropePerfabs: cc.Prefab,ropeGravity:number, nodeArray: Array<cc.Node>, isConnect: boolean, ropeName?: string) {
-        
+    creatRope: function (ropePerfabs: cc.Prefab, ropeGravity: number, nodeArray: Array<cc.Node>, isConnect: boolean, ropeName?: string, groupIndex?: number) {
+
         let len = nodeArray.length;
         let width = cc.instantiate(ropePerfabs).width;
         let distance = 0;
@@ -65,9 +66,9 @@ var toolsBasics = {
             for (let i = 0; i < nodeNum; i++) {
                 newRope = cc.instantiate(ropePerfabs);
                 ropeName ? newRope.name = ropeName : null;
-                newRope.groupIndex = 1;
+                newRope.groupIndex = groupIndex ? groupIndex : 1;
                 newRopeBody = newRope.getComponent(cc.RigidBody);
-                newRopeBody.gravityScale = ropeGravity?ropeGravity:1;
+                newRopeBody.gravityScale = ropeGravity ? ropeGravity : 1;
                 //mul() 缩放向量
                 nextRopePos = lastRope.position.add((nextVector.mul(1 / nodeNum)));
 
@@ -85,6 +86,73 @@ var toolsBasics = {
                 if (isConnect || n == len - 2) {
                     //当前绳子的最后节点挂在转折点上
                     nextNode.getComponent(cc.RevoluteJoint).connectedBody = i == nodeNum - 1 ?
+                        newRope.getComponent(cc.RigidBody) : null;
+                }
+
+                newJoint.addChild(newRope);
+            }
+        }
+
+        return newJoint;
+    },
+
+
+    createCable: function (ropePerfabs: cc.Prefab, ropeGravity: number, nodeArray: Array<cc.Node>, isConnect: boolean, ropeName?: string, groupIndex?: number) {
+
+        let len = nodeArray.length;
+        let width = cc.instantiate(ropePerfabs).width;
+        let distance = 0;
+        let nodeNum = 0;
+
+        let newRope = null;
+        let newRopeBody = null;
+        let revoJoint = null;
+        //转折点
+        let nextVector = null; //到下一个点的向量
+        let lastNode = null;
+        let nextNode = null;
+        let lastRope = null;
+        let nextRopePos = null;
+        //作为产生的绳子的父节点
+        let newJoint = new cc.Node("ropeNode");
+
+        for (let n = 0; n < nodeArray.length; n++) {
+            lastNode = nodeArray[n];
+            nextNode = nodeArray[n + 1];
+            if (n + 1 == len) break;
+
+            /**转换为世界坐标 再计算两坐标之间的直线距离 sub()向量减法 mag() 计算向量的长度*/
+            nextVector = nextNode.convertToWorldSpace(cc.v2(0, 0))
+                .sub(lastNode.convertToWorldSpace(cc.v2(0, 0)));
+            distance = Math.abs(nextVector.mag());
+
+            nodeNum = Math.floor(distance / width);
+
+            // lastRope = isConnect ? lastNode : (lastRope ? lastRope : lastNode);
+            lastRope = lastRope ? lastRope : lastNode;
+            for (let i = 0; i < nodeNum; i++) {
+                newRope = cc.instantiate(ropePerfabs);
+                ropeName ? newRope.name = ropeName : null;
+                newRope.groupIndex = groupIndex ? groupIndex : 1;
+                newRopeBody = newRope.getComponent(cc.RigidBody);
+                newRopeBody.gravityScale = ropeGravity ? ropeGravity : 1;
+                //mul() 缩放向量
+                nextRopePos = lastRope.position.add((nextVector.mul(1 / nodeNum)));
+
+                newRope.setPosition(nextRopePos);
+                revoJoint = newRope.getComponent(cc.WeldJoint);
+                revoJoint.connectedBody = lastRope.getComponent(cc.RigidBody);
+
+                revoJoint.anchor.x = (-width / 2);
+                revoJoint.anchor.y = 0;
+                revoJoint.connectedAnchor.x = (width / 2);
+                revoJoint.connectedAnchor.y = 0;
+
+                lastRope = newRope;
+
+                if (isConnect || n == len - 2) {
+                    //当前绳子的最后节点挂在转折点上
+                    nextNode.getComponent(cc.WeldJoint).connectedBody = i == nodeNum - 1 ?
                         newRope.getComponent(cc.RigidBody) : null;
                 }
 
