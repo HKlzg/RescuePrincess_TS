@@ -63,7 +63,7 @@ export abstract class ViewControllorBasic extends cc.Component {
         this.node.on(settingBasic.gameEvent.setCurrGameStep, this.setCurrGameStep, this);
 
         //Bgm
-        cc.audioEngine.play(this.bgmAS.clip, true, 1);
+        // cc.audioEngine.play(this.bgmAS.clip, true, 1);
 
 
     };
